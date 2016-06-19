@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.widget.Toast;
 
 public class BaseActivity extends Activity{
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 	
 	public void showToast (String text) {
 		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
