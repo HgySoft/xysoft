@@ -27,7 +27,7 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 			}
 		};
 		for (int i = 0; i < 5; i++) {
-			baseListAdapter.add("µðºÙ"+i);
+			baseListAdapter.add("ÕâÊÇµÚ"+i+"Item");
 		}
 		lv.setAdapter(baseListAdapter);
 		lv.setOnItemClickListener(this);

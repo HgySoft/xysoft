@@ -32,8 +32,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 			}
 		};
 		lv.setAdapter(adapter);
-		adapter.add(new User("小楚", "女", 25));
-		adapter.add(new User("小强", "男", 25));
+		adapter.add(new User("JAVA", "女", 25));
+		adapter.add(new User("PHP", "男", 25));
+		adapter.add(new User("C#", "男", 24));
 		lv.setOnItemClickListener(this);
 		cancelNotification(R.layout.activity_main);
 	}
@@ -63,6 +64,24 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 			}
 		}
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
