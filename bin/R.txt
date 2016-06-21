@@ -318,6 +318,7 @@ int layout activity_main 0x7f030017
 int layout list_view 0x7f030018
 int layout support_simple_spinner_dropdown_item 0x7f030019
 int menu main 0x7f0c0000
+int menu menu 0x7f0c0001
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
@@ -336,6 +337,8 @@ int string app_name 0x7f0a000d
 int string hello_world 0x7f0a000e
 int style AppBaseTheme 0x7f0b0083
 int style AppTheme 0x7f0b0084
+int style MyActionBarStyle 0x7f0b0085
+int style MyActionBarTitleStyle 0x7f0b0086
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f0b006d
 int style TextAppearance_AppCompat_Base_SearchResult_Subtitle 0x7f0b006f

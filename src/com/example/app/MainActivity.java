@@ -5,6 +5,7 @@ import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,6 +38,12 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		adapter.add(new User("C#", "ÄÐ", 24));
 		lv.setOnItemClickListener(this);
 		cancelNotification(R.layout.activity_main);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu, menu); 
+		return true;
 	}
 
 	@Override
