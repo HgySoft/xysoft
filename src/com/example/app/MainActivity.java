@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == RESULT_OK) showToast("成功开启", Toast.LENGTH_SHORT);
+		if(requestCode == 0) showToast("成功开启", Toast.LENGTH_SHORT);
 		else showToast("开启失败", Toast.LENGTH_SHORT);
 	}
 	
