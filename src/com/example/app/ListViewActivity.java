@@ -2,6 +2,7 @@ package com.example.app;
 
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ListViewActivity extends BaseActivity implements OnItemClickListener{
 	
@@ -35,7 +37,7 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		showToast("你点击了"+baseListAdapter.getItem(position));
+		showToast("你点击了"+baseListAdapter.getItem(position), Toast.LENGTH_SHORT);
 	}
 	
 }

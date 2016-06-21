@@ -1,16 +1,21 @@
 package com.xysoft.util;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 
 public class BluetoothUtil {
 
-	private BluetoothAdapter adapter;
+	private static BluetoothAdapter adapter;
 	
-	public BluetoothUtil() {
+	static {
 		adapter = BluetoothAdapter.getDefaultAdapter();
 	}
+	public BluetoothUtil() {
+		
+	}
 	
-	public Boolean isSuportBluetooth() {
+	public static Boolean isSuportBluetooth() {
 		if(adapter != null) {
 			return true;
 		}else {
@@ -18,9 +23,18 @@ public class BluetoothUtil {
 		}
 	}
 	
-	private Boolean getBluetoothStatus() {
+	public static Boolean getBluetoothStatus() {
 		assert (adapter != null);
 		return adapter.isEnabled();
+	}
+	
+	public static void turnonBluetooth(Activity activity, int requestCode) {
+		Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		activity.startActivityForResult(intent, requestCode);
+	}
+	
+	public static void turnoffBluetooth() {
+		adapter.disable();
 	}
 	
 }

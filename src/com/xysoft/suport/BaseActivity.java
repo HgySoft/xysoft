@@ -16,8 +16,8 @@ public class BaseActivity extends Activity{
 		super.onCreate(savedInstanceState);
 	}
 	
-	public void showToast (String text) {
-		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+	public void showToast (String text, int duration) {
+		Toast.makeText(this, text, duration).show();
 	}
 	
 	public void showNotification (Context context, int resource, int smallIcon, String title, String text) {
