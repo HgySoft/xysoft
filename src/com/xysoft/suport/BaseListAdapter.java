@@ -20,6 +20,10 @@ public abstract class BaseListAdapter<T> extends BaseAdapter{
 		this.resource = resource;
 	}
 	
+	public Context getContext() {
+		return context;
+	}
+
 	public T get(int position) {
 		return list.get(position);
 	}
@@ -31,6 +35,11 @@ public abstract class BaseListAdapter<T> extends BaseAdapter{
 	
 	public void remove(int position) {
 		list.remove(position);
+		notifyDataSetChanged();
+	}
+	
+	public void refresh(List<T> data) {
+		list = data;
 		notifyDataSetChanged();
 	}
 	

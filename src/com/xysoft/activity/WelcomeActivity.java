@@ -1,4 +1,4 @@
-package com.example.app;
+package com.xysoft.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import com.example.app.R;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.util.InjectView;
 import com.xysoft.util.Injector;

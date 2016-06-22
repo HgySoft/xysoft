@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.app.WelcomeActivity"
+            android:name="com.xysoft.activity.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,11 +26,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.app.MainActivity"
+            android:name="com.xysoft.activity.MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="com.example.app.ListViewActivity"
-            android:label="@string/hello_world"></activity>
+        <activity
+            android:name="com.xysoft.activity.BluetoothDeviceActivity"
+            android:label="@string/action_buletoothdevice" >
+        </activity>
+        <activity 
+            android:name="com.xysoft.activity.ListViewActivity"
+            android:label="@string/hello_world">
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
-package com.example.app;
+package com.xysoft.activity;
 
+import com.example.app.R;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
 

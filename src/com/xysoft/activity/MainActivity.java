@@ -1,5 +1,6 @@
-package com.example.app;
+package com.xysoft.activity;
 
+import com.example.app.R;
 import com.xysoft.entity.User;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 	private Intent intent;
 	private ListView lv;
 	private BaseListAdapter<User> adapter;
+	public static final int REQUEST_CODE = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		adapter.add(new User("蓝牙是否开启?", "女", 2));
 		adapter.add(new User("开启蓝牙", "女", 3));
 		adapter.add(new User("关闭蓝牙", "女", 4));
+		adapter.add(new User("蓝牙设置", "女", 5));
 		lv.setOnItemClickListener(this);
 		cancelNotification(R.layout.activity_main);
 	}
@@ -68,10 +71,14 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 			showToast("蓝牙是否开启："+BluetoothUtil.getBluetoothStatus(), Toast.LENGTH_SHORT);
 			break;
 		case 3:
-			BluetoothUtil.turnonBluetooth(this, 0);
+			BluetoothUtil.turnonBluetooth(this, REQUEST_CODE);
 			break;
 		case 4:
 			BluetoothUtil.turnoffBluetooth();
+			break;
+		case 5:
+			intent = new Intent(this, BluetoothDeviceActivity.class);
+			startActivity(intent);
 			break;
 		}
 
@@ -97,8 +104,11 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == 0) showToast("成功开启", Toast.LENGTH_SHORT);
-		else showToast("开启失败", Toast.LENGTH_SHORT);
+		if(resultCode != REQUEST_CODE) {
+			showToast("成功开启", Toast.LENGTH_SHORT);
+		}else {
+			showToast("开启失败", Toast.LENGTH_SHORT);
+		}
 	}
 	
 	
