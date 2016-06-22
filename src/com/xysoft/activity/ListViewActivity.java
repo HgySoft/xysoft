@@ -5,6 +5,7 @@ import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +23,9 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_view);
+		getActionBar().setTitle("·µ»Ø");
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		lv = (ListView) findViewById(R.id.listView2);
 		baseListAdapter = new BaseListAdapter<String>(this, android.R.layout.simple_list_item_1) {
 			@Override
@@ -39,6 +43,16 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		showToast("Äãµã»÷ÁË"+baseListAdapter.getItem(position), Toast.LENGTH_SHORT);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
 	}
 	
 }

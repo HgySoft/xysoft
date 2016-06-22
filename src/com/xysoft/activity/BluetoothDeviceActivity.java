@@ -108,6 +108,9 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	
 	private void initUI() {
 		Injector.get(this).inject();
+		getActionBar().setTitle("·µ»Ø");
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		adapter = new BaseListAdapter<BluetoothDevice>(this, android.R.layout.simple_list_item_2) {
 			@Override
 			protected void initView(int position, View convertView, ViewGroup parent) {
@@ -139,6 +142,9 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
 		case R.id.refresh_device:
 			adapter.refresh(mDeviceList);
 			break;
