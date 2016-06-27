@@ -2,7 +2,9 @@ package com.xysoft.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -17,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.app.R;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
@@ -30,7 +34,10 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	
 	@InjectView(R.id.bluetoothdevice)
 	private ListView bluetoothdevice;
-	public static final int REQUEST_CODE = 0;
+	@InjectView(R.id.bluetoothdevice_pb)
+	private ProgressBar mprogressBar;
+	public static final int REQUEST_BLUETOOTH_TURNON = 1;
+	public static String EXTRA_DEVICE_ADDRESS = "device_address";
 	private List<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
 	private List<BluetoothDevice> mBondedDeviceList = new ArrayList<BluetoothDevice>();
 	private BaseListAdapter<BluetoothDevice> adapter;
@@ -55,7 +62,11 @@ public class BluetoothDeviceActivity extends BaseActivity{
         //注册广播
         registerReceiver(receiver, filter);
         //开启蓝牙
-        BluetoothUtil.turnonBluetooth(this, REQUEST_CODE);
+        BluetoothUtil.turnonBluetooth(this, REQUEST_BLUETOOTH_TURNON);
+        //开始扫描
+        adapter.refresh(mDeviceList);
+        BluetoothUtil.findDevice();
+        bluetoothdevice.setOnItemClickListener(bindDeviceClick);
 	}
 	
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -63,13 +74,15 @@ public class BluetoothDeviceActivity extends BaseActivity{
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if( BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action) ) {
-                setProgressBarIndeterminateVisibility(true);
+                //setProgressBarIndeterminateVisibility(true);
+            	mprogressBar.setVisibility(View.VISIBLE);
                 //初始化数据列表
                 mDeviceList.clear();
                 adapter.notifyDataSetChanged();
             }
             else if( BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                setProgressBarIndeterminateVisibility(false);
+                //setProgressBarIndeterminateVisibility(false);
+            	mprogressBar.setVisibility(View.INVISIBLE);
             }
             else if( BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -80,10 +93,12 @@ public class BluetoothDeviceActivity extends BaseActivity{
             else if( BluetoothAdapter.ACTION_SCAN_MODE_CHANGED.equals(action)) {
                int scanMode = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, 0);
                 if( scanMode == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-                    setProgressBarIndeterminateVisibility(true);
+                    //setProgressBarIndeterminateVisibility(true);
+                	mprogressBar.setVisibility(View.VISIBLE);
                 }
                 else {
-                    setProgressBarIndeterminateVisibility(false);
+                    //setProgressBarIndeterminateVisibility(false);
+                	mprogressBar.setVisibility(View.INVISIBLE);
                 }
             }
             else if( BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action) ) {
@@ -108,7 +123,7 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	
 	private void initUI() {
 		Injector.get(this).inject();
-		getActionBar().setTitle("返回");
+		//getActionBar().setTitle("返回");
 		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		adapter = new BaseListAdapter<BluetoothDevice>(this, android.R.layout.simple_list_item_2) {
@@ -153,12 +168,14 @@ public class BluetoothDeviceActivity extends BaseActivity{
 			break;
 		case R.id.find_device:
 			//查找设备
+			mprogressBar.setVisibility(View.VISIBLE);
             adapter.refresh(mDeviceList);
             BluetoothUtil.findDevice();
             bluetoothdevice.setOnItemClickListener(bindDeviceClick);
 			break;
 		case R.id.bonded_device:
             //查看已绑定设备
+			mprogressBar.setVisibility(View.INVISIBLE);
             mBondedDeviceList = BluetoothUtil.getBluetoothDeviceList();
             adapter.refresh(mBondedDeviceList);
             bluetoothdevice.setOnItemClickListener(null);
@@ -170,7 +187,8 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode == REQUEST_CODE) finish();
+		if(resultCode == Activity.RESULT_CANCELED) finish();
+		if(requestCode != REQUEST_BLUETOOTH_TURNON) finish();
 	}
 	
     @SuppressLint("NewApi")
@@ -179,6 +197,10 @@ public class BluetoothDeviceActivity extends BaseActivity{
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             BluetoothDevice device = mDeviceList.get(i);
             device.createBond();
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_DEVICE_ADDRESS, device.getAddress());
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     };
 	

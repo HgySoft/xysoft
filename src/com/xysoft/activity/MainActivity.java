@@ -4,11 +4,13 @@ import com.example.app.R;
 import com.xysoft.entity.User;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
+import com.xysoft.suport.PenClientCtrl;
 import com.xysoft.util.BluetoothUtil;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +24,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 	private Intent intent;
 	private ListView lv;
 	private BaseListAdapter<User> adapter;
-	public static final int REQUEST_CODE = 0;
+	private PenClientCtrl penClientCtrl;
+	public static final int REQUEST_BLUETOOTH_TURNON = 1;
+	private static final int REQUEST_CONNECT_PEN = 4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +47,36 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		adapter.add(new User("蓝牙是否开启?", "女", 2));
 		adapter.add(new User("开启蓝牙", "女", 3));
 		adapter.add(new User("关闭蓝牙", "女", 4));
-		adapter.add(new User("蓝牙设置", "女", 5));
 		lv.setOnItemClickListener(this);
 		cancelNotification(R.layout.activity_main);
+		penClientCtrl = PenClientCtrl.getInstance(getApplicationContext());
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_activity_menu, menu); 
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_connectPen:
+			if(!BluetoothUtil.isSuportBluetooth()) {
+				showToast("该设备不支持蓝牙！", Toast.LENGTH_SHORT);
+			}else {
+				if(!penClientCtrl.isConnected()) {
+					showToast("正在搜索蓝牙设备...", Toast.LENGTH_SHORT);
+					intent = new Intent(this, BluetoothDeviceActivity.class);
+					startActivityForResult(intent, REQUEST_CONNECT_PEN);
+				}else {
+					penClientCtrl.disconnect();
+				}
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
@@ -71,14 +96,10 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 			showToast("蓝牙是否开启："+BluetoothUtil.getBluetoothStatus(), Toast.LENGTH_SHORT);
 			break;
 		case 3:
-			BluetoothUtil.turnonBluetooth(this, REQUEST_CODE);
+			BluetoothUtil.turnonBluetooth(this, REQUEST_BLUETOOTH_TURNON);
 			break;
 		case 4:
 			BluetoothUtil.turnoffBluetooth();
-			break;
-		case 5:
-			intent = new Intent(this, BluetoothDeviceActivity.class);
-			startActivity(intent);
 			break;
 		}
 
@@ -104,10 +125,18 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode != REQUEST_CODE) {
-			showToast("成功开启", Toast.LENGTH_SHORT);
-		}else {
-			showToast("开启失败", Toast.LENGTH_SHORT);
+		switch (requestCode) {
+			case REQUEST_BLUETOOTH_TURNON:
+				showToast("蓝牙已开启", Toast.LENGTH_SHORT);
+				break;
+			case REQUEST_CONNECT_PEN:
+				if ( resultCode == Activity.RESULT_OK ) {
+					String address = null;
+					if ( (address = data.getStringExtra( BluetoothDeviceActivity.EXTRA_DEVICE_ADDRESS )) != null ) {
+						penClientCtrl.connect( address );
+					}
+				}
+				break;
 		}
 	}
 	

@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name="com.xysoft.activity.BluetoothDeviceActivity"
-            android:label="@string/action_buletoothdevice" >
+            android:label="@string/menu_buletoothdevice" >
         </activity>
         <activity 
             android:name="com.xysoft.activity.ListViewActivity"

@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
 	<item
-        android:id="@+id/menu_share"
+        android:id="@+id/menu_connectPen"
         android:icon="@drawable/ic_launcher"
         android:showAsAction="ifRoom"
-        android:title="分享"/>
+        android:title="连接智慧笔"/>
     <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_launcher"
