@@ -39,7 +39,6 @@ public class BluetoothDeviceActivity extends BaseActivity{
 	public static final int REQUEST_BLUETOOTH_TURNON = 1;
 	public static String EXTRA_DEVICE_ADDRESS = "device_address";
 	private List<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
-	private List<BluetoothDevice> mBondedDeviceList = new ArrayList<BluetoothDevice>();
 	private BaseListAdapter<BluetoothDevice> adapter;
 
 	@Override
@@ -176,9 +175,9 @@ public class BluetoothDeviceActivity extends BaseActivity{
 		case R.id.bonded_device:
             //查看已绑定设备
 			mprogressBar.setVisibility(View.INVISIBLE);
-            mBondedDeviceList = BluetoothUtil.getBluetoothDeviceList();
-            adapter.refresh(mBondedDeviceList);
-            bluetoothdevice.setOnItemClickListener(null);
+			mDeviceList = BluetoothUtil.getBluetoothDeviceList();
+            adapter.refresh(mDeviceList);
+            bluetoothdevice.setOnItemClickListener(bindDeviceClick);
 			break;
 		}
 		return true;
