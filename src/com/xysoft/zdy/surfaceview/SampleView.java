@@ -28,18 +28,16 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private float scale = 11, offsetX = 0, offsetY = 0;
 
-	public SampleView( Context context )
-	{
+	public SampleView( Context context ) {
 		super( context );
 
 		getHolder().addCallback( this );
 		mSampleThread = new SampleThread( this.getHolder(), this );
 	}
 
-	public void setPageSize( float width, float height )
-	{
-		if ( getWidth() <= 0 || getHeight() <= 0 || width <= 0 || height <= 0 )
-		{
+	public void setPageSize( float width, float height ) {
+		
+		if ( getWidth() <= 0 || getHeight() <= 0 || width <= 0 || height <= 0 ) {
 			return;
 		}
 
@@ -62,59 +60,44 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	@Override
-	public void draw( Canvas canvas )
-	{
-		canvas.drawColor( Color.LTGRAY );
-
-		if ( background != null )
-		{
+	public void draw( Canvas canvas ) {
+		canvas.drawColor( Color.LTGRAY );//»­°å±³¾°É«
+		if ( background != null ) {
 			canvas.drawBitmap( background, offsetX, offsetY, null );
 		}
-
-		if ( strokes != null && strokes.size() > 0 )
-		{
+		if ( strokes != null && strokes.size() > 0 ) {
 			Renderer.draw( canvas, strokes.toArray( new Stroke[0] ), scale, offsetX, offsetY );
 		}
 	}
 
 	@Override
-	public void surfaceChanged( SurfaceHolder arg0, int arg1, int arg2, int arg3 )
-	{
+	public void surfaceChanged( SurfaceHolder arg0, int arg1, int arg2, int arg3 ) {
+		
 	}
 
 	@Override
-	public void surfaceCreated( SurfaceHolder arg0 )
-	{
+	public void surfaceCreated( SurfaceHolder arg0 ) {
 		mSampleThread = new SampleThread( getHolder(), this );
 		mSampleThread.setRunning( true );
 		mSampleThread.start();
 	}
 
 	@Override
-	public void surfaceDestroyed( SurfaceHolder arg0 )
-	{
+	public void surfaceDestroyed( SurfaceHolder arg0 ) {
 		mSampleThread.setRunning( false );
-
 		boolean retry = true;
-
-		while ( retry )
-		{
-			try
-			{
+		while ( retry ) {
+			try{
 				mSampleThread.join();
 				retry = false;
-			}
-			catch ( InterruptedException e )
-			{
+			}catch ( InterruptedException e ) {
 				e.getStackTrace();
 			}
 		}
 	}
 
-	public void addDot( int sectionId, int ownerId, int noteId, int pageId, int x, int y, int fx, int fy, int force, long timestamp, int type, int color )
-	{
-		if ( this.sectionId != sectionId || this.ownerId != ownerId || this.noteId != noteId || this.pageId != pageId )
-		{
+	public void addDot( int sectionId, int ownerId, int noteId, int pageId, int x, int y, int fx, int fy, int force, long timestamp, int type, int color ) {
+		if ( this.sectionId != sectionId || this.ownerId != ownerId || this.noteId != noteId || this.pageId != pageId ) {
 			strokes = new ArrayList<Stroke>();
 
 			this.sectionId = sectionId;
@@ -123,8 +106,7 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 			this.pageId = pageId;
 		}
 
-		if ( DotType.isPenActionDown( type ) || stroke == null || stroke.isReadOnly() )
-		{
+		if ( DotType.isPenActionDown( type ) || stroke == null || stroke.isReadOnly() ) {
 			stroke = new Stroke( sectionId, ownerId, noteId, pageId, color );
 			strokes.add( stroke );
 		}
@@ -132,58 +114,42 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 		stroke.add( new Dot( x, y, fx, fy, force, type, timestamp ) );
 	}
 
-	public void addStrokes( Stroke[] strs )
-	{
-		for ( Stroke stroke : strs )
-		{
+	public void addStrokes( Stroke[] strs ) {
+		for ( Stroke stroke : strs ) {
 			strokes.add( stroke );
 		}
 	}
 
-	public class SampleThread extends Thread
-	{
+	public class SampleThread extends Thread {
 		private SurfaceHolder surfaceholder;
 		private SampleView mSampleiView;
 		private boolean running = false;
 
-		public SampleThread( SurfaceHolder surfaceholder, SampleView mView )
-		{
+		public SampleThread( SurfaceHolder surfaceholder, SampleView mView ) {
 			this.surfaceholder = surfaceholder;
 			this.mSampleiView = mView;
 		}
 
-		public void setRunning( boolean run )
-		{
+		public void setRunning( boolean run ) {
 			running = run;
 		}
 
 		@Override
-		public void run()
-		{
+		public void run() {
 			setName( "SampleThread" );
-
 			Canvas mCanvas;
-
-			while ( running )
-			{
+			while ( running ) {
 				mCanvas = null;
-
-				try
-				{
+				try{
 					mCanvas = surfaceholder.lockCanvas(); // lock canvas
-
-					synchronized ( surfaceholder )
-					{
-						if ( mCanvas != null )
-						{
+					synchronized ( surfaceholder ) {
+						if ( mCanvas != null ) {
 							mSampleiView.draw( mCanvas );
 						}
 					}
 				}
-				finally
-				{
-					if ( mCanvas != null )
-					{
+				finally {
+					if ( mCanvas != null ) {
 						surfaceholder.unlockCanvasAndPost( mCanvas ); // unlock
 																		// canvas
 					}

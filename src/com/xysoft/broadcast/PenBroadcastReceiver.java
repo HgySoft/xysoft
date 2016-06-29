@@ -1,18 +1,15 @@
 package com.xysoft.broadcast;
 
 import kr.neolab.sdk.pen.penmsg.PenMsgType;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.example.app.R;
 import com.xysoft.common.PenCtrlConst.Broadcast;
 import com.xysoft.common.PenCtrlConst.JsonTag;
 import com.xysoft.suport.PenClientCtrl;
 import com.xysoft.zdy.dialog.InputPasswordDialog;
 import com.xysoft.zdy.surfaceview.SampleView;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -51,15 +48,13 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
 
-		if ( Broadcast.ACTION_PEN_MESSAGE.equals( action ) )
-		{
+		if ( Broadcast.ACTION_PEN_MESSAGE.equals( action ) ) {
 			int penMsgType = intent.getIntExtra( Broadcast.MESSAGE_TYPE, 0 );
 			String content = intent.getStringExtra( Broadcast.CONTENT );
 
 			handleMsg( penMsgType, content );
 		}
-		else if ( Broadcast.ACTION_PEN_DOT.equals( action ) )
-		{
+		else if ( Broadcast.ACTION_PEN_DOT.equals( action ) ) {
 			int sectionId = intent.getIntExtra( Broadcast.SECTION_ID, 0 );
 			int ownerId = intent.getIntExtra( Broadcast.OWNER_ID, 0 );
 			int noteId = intent.getIntExtra( Broadcast.NOTE_ID, 0 );
@@ -75,8 +70,7 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 
 			handleDot( sectionId, ownerId, noteId, pageId, x, y, fx, fy, force, timestamp, type, color );
 		}
-		else if ( Broadcast.ACTION_PEN_DOT.equals( action ))
-		{
+		else if ( Broadcast.ACTION_PEN_DOT.equals( action )) {
 			penClientCtrl.suspendPenUpgrade();
 		}
 	}
@@ -86,19 +80,19 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 		switch ( penMsgType ) {
 			// Message of the attempt to connect a pen
 			case PenMsgType.PEN_CONNECTION_TRY:
-				Toast.makeText(this.context, "try to connect.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "正在连接...", Toast.LENGTH_SHORT).show();
 				break;
 			// Pens when the connection is completed (state certification process is not yet in progress)
 			case PenMsgType.PEN_CONNECTION_SUCCESS:
-				Toast.makeText( this.context, "connection is successful.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "连接成功", Toast.LENGTH_SHORT).show();
 				break;
 			// Message when a connection attempt is unsuccessful pen
 			case PenMsgType.PEN_CONNECTION_FAILURE:
-				Toast.makeText( this.context, "connection has failed.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "连接失败", Toast.LENGTH_SHORT).show();
 				break;
 			// When you are connected and disconnected from the state pen
 			case PenMsgType.PEN_DISCONNECTED:
-				Toast.makeText( this.context, "connection has been terminated.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "连接已断开", Toast.LENGTH_SHORT).show();
 				break;
 			// Pen transmits the state when the firmware update is processed.
 			case PenMsgType.PEN_FW_UPGRADE_STATUS: {
@@ -116,17 +110,17 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 			// Pen firmware update is complete
 			case PenMsgType.PEN_FW_UPGRADE_SUCCESS:
 				this.onUpgradeSuccess();
-				Toast.makeText( this.context, "file transfer is complete.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "文件传输完成", Toast.LENGTH_SHORT).show();
 				break;
 			// Pen Firmware Update Fails
 			case PenMsgType.PEN_FW_UPGRADE_FAILURE:
 				this.onUpgradeFailure( false );
-				Toast.makeText( this.context, "file transfer has failed.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "文件传输失败", Toast.LENGTH_SHORT).show();
 				break;
 			// When the pen stops randomly during the firmware update
 			case PenMsgType.PEN_FW_UPGRADE_SUSPEND:
 				this.onUpgradeFailure( true );
-				Toast.makeText( this.context, "file transfer is suspended." ,Toast.LENGTH_SHORT);
+				Toast.makeText(context, "暂停文件传输" ,Toast.LENGTH_SHORT).show();
 				break;
 			// Offline Data List response of the pen
 			case PenMsgType.OFFLINE_DATA_NOTE_LIST:
@@ -146,7 +140,7 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 				// you can call this function, after complete download.
 				//
 				// iPenCtrl.reqOfflineData( sectionId, ownerId, noteId );
-				Toast.makeText( this.context, "offline data list is received.", Toast.LENGTH_SHORT);
+				Toast.makeText(context, "接收脱机数据列表", Toast.LENGTH_SHORT).show();
 				break;
 			// Messages for offline data transfer begins
 			case PenMsgType.OFFLINE_DATA_SEND_START:
@@ -197,7 +191,7 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 				} catch ( JSONException e ) {
 					e.printStackTrace();
 				}
-				inputPassDialog = new InputPasswordDialog( this.context, penClientCtrl, retryCount, resetCount );
+				inputPassDialog = new InputPasswordDialog(context, penClientCtrl, retryCount, resetCount );
 				inputPassDialog.show();
 			}
 				break;
@@ -210,16 +204,16 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 	}
 	
 	private void onUpgradeSuccess() {
-		mBuilder.setContentText( "The file transfer is complete." ).setProgress( 0, 0, false );
+		mBuilder.setContentText( "文件传输完成" ).setProgress( 0, 0, false );
 		mNotifyManager.notify( 0, mBuilder.build() );
 	}
 	
 	private void onUpgradeFailure( boolean isSuspend ) {
 		if ( isSuspend ) {
-			mBuilder.setContentText( "file transfer is suspended." ).setProgress( 0, 0, false );
+			mBuilder.setContentText( "暂停文件传输" ).setProgress( 0, 0, false );
 		}
 		else {
-			mBuilder.setContentText( "file transfer has failed." ).setProgress( 0, 0, false );
+			mBuilder.setContentText( "文件传输失败" ).setProgress( 0, 0, false );
 		}
 		mNotifyManager.notify( 0, mBuilder.build() );
 	}
