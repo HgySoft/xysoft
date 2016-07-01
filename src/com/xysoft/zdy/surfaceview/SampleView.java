@@ -26,13 +26,13 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private int sectionId = 0, ownerId = 0, noteId = 0, pageId = 0;
 
-	private float scale = 11, offsetX = 0, offsetY = 0;
+	private float scale = 22, offsetX = 0, offsetY = 0;
 
 	public SampleView( Context context ) {
 		super( context );
 
 		getHolder().addCallback( this );
-		mSampleThread = new SampleThread( this.getHolder(), this );
+		//mSampleThread = new SampleThread( this.getHolder(), this );
 	}
 
 	public void setPageSize( float width, float height ) {
