@@ -3,10 +3,17 @@ package com.xysoft.common;
 public class PenCtrlConst {
 	
 	public class Setting {
+		public final static String KEY_PROTOCOL_VERSION = "protocol_version";
+		public final static String KEY_TIMEZONE_OFFSET = "timezone";
+		public final static String KEY_TIMETICK = "timetick";
+		public final static String KEY_MAX_FORCE = "force_max";
+		public final static String KEY_BATTERY_STATUS = "battery";
+		public final static String KEY_MEMORY_STATUS = "used_memory";
 		public final static String KEY_PASSWORD = "password";
 		public final static String KEY_PEN_COLOR = "pen_color";
 		public final static String KEY_AUTO_POWER_ON = "auto_power_onoff";
 		public final static String KEY_ACCELERATION_SENSOR = "acceleration_sensor_onoff";
+		public final static String KEY_BOOL_HOVER = "hover_mode";
 		public final static String KEY_BEEP = "beep_onoff";
 		public final static String KEY_AUTO_POWER_OFF_TIME = "auto_power_off_time";
 		public final static String KEY_SENSITIVITY = "sensitivity";

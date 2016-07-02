@@ -3,10 +3,9 @@ package com.xysoft.suport;
 import java.io.File;
 import org.json.JSONObject;
 import com.xysoft.common.PenCtrlConst;
+import com.xysoft.util.PreferenceUtils;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import kr.neolab.sdk.pen.PenCtrl;
 import kr.neolab.sdk.pen.penmsg.IPenMsgListener;
 import kr.neolab.sdk.pen.penmsg.PenMsg;
@@ -25,7 +24,6 @@ public class PenClientCtrl implements IPenMsgListener{
 	public static int USING_OWNER_ID = 27;
 	public static int[] USING_NOTES = new int[] { 301, 302, 303, 28, 50, 101, 102, 103, 201, 202, 203, 600, 601, 602, 603, 605, 606, 607, 608 };
 	private Context context;
-	private SharedPreferences mPref;
 	
 	static {
 		iPenCtrl = PenCtrl.getInstance();
@@ -35,7 +33,6 @@ public class PenClientCtrl implements IPenMsgListener{
 		this.context = context;
 		iPenCtrl.startup();
 		iPenCtrl.setListener(this);
-		mPref = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 	
 	public static PenClientCtrl getInstance( Context context ) {
@@ -172,8 +169,6 @@ public class PenClientCtrl implements IPenMsgListener{
 					return;
 				}
 				NLog.d( jsonObject.toString() );
-				mPref = PreferenceManager.getDefaultSharedPreferences( context );
-				SharedPreferences.Editor editor = mPref.edit();
 				try {
 					String stat_version = jsonObject.getString( PenCtrlConst.JsonTag.STRING_PROTOCOL_VERSION );
 					int stat_timezone = jsonObject.getInt( PenCtrlConst.JsonTag.INT_TIMEZONE_OFFSET );
@@ -188,14 +183,21 @@ public class PenClientCtrl implements IPenMsgListener{
 					boolean stat_beep = jsonObject.getBoolean( PenCtrlConst.JsonTag.BOOL_BEEP );
 					int stat_autopower_time = jsonObject.getInt( PenCtrlConst.JsonTag.INT_AUTO_POWER_OFF_TIME );
 					int stat_sensitivity = jsonObject.getInt( PenCtrlConst.JsonTag.INT_PEN_SENSITIVITY );
-					editor.putBoolean( PenCtrlConst.Setting.KEY_ACCELERATION_SENSOR, stat_accel );
-					editor.putString( PenCtrlConst.Setting.KEY_AUTO_POWER_OFF_TIME, ""+stat_autopower_time );
-					editor.putBoolean( PenCtrlConst.Setting.KEY_AUTO_POWER_ON, stat_autopower );
-					editor.putBoolean( PenCtrlConst.Setting.KEY_BEEP, stat_beep );
-					editor.putString( PenCtrlConst.Setting.KEY_PEN_COLOR, ""+stat_pencolor );
-					editor.putString( PenCtrlConst.Setting.KEY_SENSITIVITY, ""+stat_sensitivity );
-					editor.putString( PenCtrlConst.Setting.KEY_PASSWORD, getCurrentPassword() );
-					editor.commit();
+					
+					PreferenceUtils.setString(context, PenCtrlConst.Setting.KEY_PROTOCOL_VERSION, stat_version);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_TIMEZONE_OFFSET, stat_timezone);
+					PreferenceUtils.setLong(context, PenCtrlConst.Setting.KEY_TIMETICK, stat_timetick);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_MAX_FORCE, stat_forcemax);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_BATTERY_STATUS, stat_battery);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_MEMORY_STATUS, stat_usedmem);
+					PreferenceUtils.setBoolean(context, PenCtrlConst.Setting.KEY_BOOL_HOVER, stat_hovermode);
+					PreferenceUtils.setBoolean(context, PenCtrlConst.Setting.KEY_ACCELERATION_SENSOR, stat_accel);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_AUTO_POWER_OFF_TIME, stat_autopower_time);
+					PreferenceUtils.setBoolean(context, PenCtrlConst.Setting.KEY_AUTO_POWER_ON, stat_autopower);
+					PreferenceUtils.setBoolean(context, PenCtrlConst.Setting.KEY_BEEP, stat_beep);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_PEN_COLOR, stat_pencolor);
+					PreferenceUtils.setInt(context, PenCtrlConst.Setting.KEY_SENSITIVITY, stat_sensitivity);
+					PreferenceUtils.setString(context, PenCtrlConst.Setting.KEY_PASSWORD, getCurrentPassword());
 				} catch ( Exception e ) {
 					e.printStackTrace();
 				}

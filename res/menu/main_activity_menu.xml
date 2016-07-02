@@ -12,13 +12,43 @@
         android:showAsAction="never"
         android:title="设置"/>
     <item
-        android:id="@+id/menu_scan"
+        android:id="@+id/menu_red"
         android:icon="@drawable/ic_launcher"
         android:showAsAction="never"
-        android:title="扫一扫"/>
+        android:title="红色"/>
     <item
-        android:id="@+id/menu_help"
+        android:id="@+id/menu_blue"
         android:icon="@drawable/ic_launcher"
         android:showAsAction="never"
-        android:title="帮助或反馈"/>
+        android:title="蓝色"/>
+    <item
+        android:id="@+id/menu_yellow"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="黄色"/>
+    <item
+        android:id="@+id/menu_pink"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="粉色"/>
+   	<item
+        android:id="@+id/menu_mint"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="绿色"/>
+   	<item
+        android:id="@+id/menu_violet"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="紫色"/>
+    <item
+        android:id="@+id/menu_gray"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="灰色"/>
+    <item
+        android:id="@+id/menu_black"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="never"
+        android:title="黑色"/>
 </menu>

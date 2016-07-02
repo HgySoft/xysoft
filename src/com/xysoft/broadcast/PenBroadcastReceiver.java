@@ -1,15 +1,20 @@
 package com.xysoft.broadcast;
 
 import kr.neolab.sdk.pen.penmsg.PenMsgType;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.example.app.R;
+import com.xysoft.common.PenCtrlConst;
 import com.xysoft.common.PenCtrlConst.Broadcast;
 import com.xysoft.common.PenCtrlConst.JsonTag;
 import com.xysoft.suport.PenClientCtrl;
+import com.xysoft.util.PreferenceUtils;
 import com.xysoft.zdy.dialog.InputPasswordDialog;
 import com.xysoft.zdy.surfaceview.SampleView;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -140,7 +145,8 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 				// you can call this function, after complete download.
 				//
 				// iPenCtrl.reqOfflineData( sectionId, ownerId, noteId );
-				Toast.makeText(context, "接收脱机数据列表", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "电量："+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_BATTERY_STATUS, -1)+
+						"，内存已使用："+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_MEMORY_STATUS, -1), Toast.LENGTH_SHORT).show();
 				break;
 			// Messages for offline data transfer begins
 			case PenMsgType.OFFLINE_DATA_SEND_START:

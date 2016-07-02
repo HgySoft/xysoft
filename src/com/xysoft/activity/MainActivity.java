@@ -7,9 +7,11 @@ import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.PenClientCtrl;
 import com.xysoft.util.BluetoothUtil;
 import com.xysoft.zdy.surfaceview.SampleView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,6 +80,30 @@ public class MainActivity extends BaseActivity {
 		case R.id.menu_setting: 
 			intent = new Intent(this, ListViewActivity.class);
 			startActivityForResult(intent, Activity.RESULT_OK);
+			return true;
+		case R.id.menu_red: 
+			penClientCtrl.reqSetupPenTipColor(-444912);//ºì
+			return true;
+		case R.id.menu_blue: 
+			penClientCtrl.reqSetupPenTipColor(Color.BLUE);//À¶
+			return true;
+		case R.id.menu_yellow: 
+			penClientCtrl.reqSetupPenTipColor(-275674);//»Æ
+			return true;
+		case R.id.menu_pink: 
+			penClientCtrl.reqSetupPenTipColor(-57212);//·Û
+			return true;
+		case R.id.menu_mint: 
+			penClientCtrl.reqSetupPenTipColor(-14163768);//ÂÌ
+			return true;
+		case R.id.menu_violet: 
+			penClientCtrl.reqSetupPenTipColor(-6537267);//×Ï
+			return true;
+		case R.id.menu_gray: 
+			penClientCtrl.reqSetupPenTipColor(-4342339);//»Ò
+			return true;
+		case R.id.menu_black: 
+			penClientCtrl.reqSetupPenTipColor(-16777216);//ºÚ
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
