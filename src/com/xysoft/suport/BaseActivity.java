@@ -7,12 +7,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class BaseActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);//х╚фа
 		super.onCreate(savedInstanceState);
 	}
 	
