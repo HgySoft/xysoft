@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.Base64;
 
 public class AESUtil {
 	
@@ -25,7 +24,7 @@ public class AESUtil {
             IvParameterSpec ivspec = new IvParameterSpec(iv.getBytes());
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
             byte[] encrypted = cipher.doFinal(plaintext);
-            return new String(new Base64().encode(encrypted));
+            return android.util.Base64.encodeToString(encrypted, 0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -34,7 +33,7 @@ public class AESUtil {
     
     public static String desEncrypt(String data, String key, String iv) {
         try {
-            byte[] encrypted = new Base64().decode(data);
+            byte[] encrypted = android.util.Base64.decode(data, 0);
 
             Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
             SecretKeySpec keyspec = new SecretKeySpec(key.getBytes(), "AES");
