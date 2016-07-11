@@ -29,7 +29,7 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_view);
-		getActionBar().setTitle("·µ»Ø");
+		getActionBar().setTitle("è¿”å›");
 		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		initUI();
@@ -45,11 +45,11 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 			}
 		};
 		lv.setAdapter(adapter);
-		adapter.add(new User("Ìøµ½ListView²¢µ¯³öÍ¨Öª", "Å®", 0));
-		adapter.add(new User("ÊÇ·ñÖ§³ÖÀ¶ÑÀ?", "Å®", 1));
-		adapter.add(new User("À¶ÑÀÊÇ·ñ¿ªÆô?", "Å®", 2));
-		adapter.add(new User("¿ªÆôÀ¶ÑÀ", "Å®", 3));
-		adapter.add(new User("¹Ø±ÕÀ¶ÑÀ", "Å®", 4));
+		adapter.add(new User("è·³åˆ°ListViewå¹¶å¼¹å‡ºé€šçŸ¥", "å¥³", 0));
+		adapter.add(new User("æ˜¯å¦æ”¯æŒè“ç‰™?", "å¥³", 1));
+		adapter.add(new User("è“ç‰™æ˜¯å¦å¼€å¯?", "å¥³", 2));
+		adapter.add(new User("å¼€å¯è“ç‰™", "å¥³", 3));
+		adapter.add(new User("å…³é—­è“ç‰™", "å¥³", 4));
 		lv.setOnItemClickListener(this);
 		cancelNotification(R.layout.activity_main);
 	}
@@ -59,14 +59,14 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 		User user = adapter.getItem(position);
 		switch (user.getAge()) {
 		case 0:
-			showToast(String.format("Ãû×Ö: %s, ĞÔ±ğ£º%s, ÄêÁä£º%d", user.getName(), user.getSex(), user.getAge()), Toast.LENGTH_SHORT);
-			showNotification(this, R.layout.activity_main, R.drawable.ic_launcher, "ÄãÓĞÒ»ÌõĞÂÏûÏ¢", "¹ş¹ş");
+			showToast(String.format("åå­—: %s, æ€§åˆ«ï¼š%s, å¹´é¾„ï¼š%d", user.getName(), user.getSex(), user.getAge()), Toast.LENGTH_SHORT);
+			showNotification(this, R.layout.activity_main, R.drawable.ic_launcher, "ä½ æœ‰ä¸€æ¡æ–°æ¶ˆæ¯", "å“ˆå“ˆ");
 			break;
 		case 1:
-			showToast("ÊÇ·ñÖ§³ÖÀ¶ÑÀ£º"+BluetoothUtil.isSuportBluetooth(), Toast.LENGTH_SHORT);
+			showToast("æ˜¯å¦æ”¯æŒè“ç‰™ï¼š"+BluetoothUtil.isSuportBluetooth(), Toast.LENGTH_SHORT);
 			break;
 		case 2:
-			showToast("À¶ÑÀÊÇ·ñ¿ªÆô£º"+BluetoothUtil.getBluetoothStatus(), Toast.LENGTH_SHORT);
+			showToast("è“ç‰™æ˜¯å¦å¼€å¯ï¼š"+BluetoothUtil.getBluetoothStatus(), Toast.LENGTH_SHORT);
 			break;
 		case 3:
 			BluetoothUtil.turnonBluetooth(this, REQUEST_BLUETOOTH_TURNON);
@@ -92,7 +92,7 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 		case REQUEST_BLUETOOTH_TURNON:
-			showToast("À¶ÑÀÒÑ¿ªÆô", Toast.LENGTH_SHORT);
+			showToast("è“ç‰™å·²å¼€å¯", Toast.LENGTH_SHORT);
 			break;
 		}
 	}

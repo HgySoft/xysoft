@@ -62,7 +62,7 @@ public class JacksonUtil {
 		try {
 			object = (T) getInstance().readValue(json, classz);
 		} catch (Exception e) {
-			System.out.println("======>>鏃犳晥Json瀛楃涓�");
+			System.out.println("======>>JSON转对象失败");
 			e.printStackTrace();
 		}
 		return object;

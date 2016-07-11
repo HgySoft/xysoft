@@ -61,7 +61,7 @@ public class SampleView extends SurfaceView implements SurfaceHolder.Callback {
 
 	@Override
 	public void draw( Canvas canvas ) {
-		canvas.drawColor( Color.LTGRAY );//»­°å±³¾°É«
+		canvas.drawColor( Color.LTGRAY );//ç”»æ¿èƒŒæ™¯è‰²
 		if ( background != null ) {
 			canvas.drawBitmap( background, offsetX, offsetY, null );
 		}

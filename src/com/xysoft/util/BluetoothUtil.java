@@ -48,13 +48,13 @@ public class BluetoothUtil {
 		adapter.disable();
 	}
 	
-	/**²éÕÒÉè±¸**/
+	/**æŸ¥æ‰¾è®¾å¤‡**/
 	public static void findDevice() {
 		assert (adapter != null);
 		adapter.startDiscovery();
 	}
 	
-	/**»ñÈ¡ÒÑ°ó¶¨Éè±¸**/
+	/**è·å–å·²ç»‘å®šè®¾å¤‡**/
 	public static List<BluetoothDevice> getBluetoothDeviceList() {
 		return new ArrayList<BluetoothDevice>(adapter.getBondedDevices());
 	}

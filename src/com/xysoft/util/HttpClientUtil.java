@@ -43,27 +43,27 @@ public class HttpClientUtil {
     public static synchronized HttpClient getHttpClient() {
         if (null== customerHttpClient) {
             HttpParams params = new BasicHttpParams();
-            // ÉèÖÃÒ»Ğ©»ù±¾²ÎÊı
+            // è®¾ç½®ä¸€äº›åŸºæœ¬å‚æ•°
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpProtocolParams.setContentCharset(params,
                     CHARSET);
             HttpProtocolParams.setUseExpectContinue(params, true);
             HttpProtocolParams.setUserAgent(params, "Mozilla/5.0(Linux;U;Android 2.2.1;en-us;Nexus One Build.FRG83) "
                                     +"AppleWebKit/553.1(KHTML,like Gecko) Version/4.0 Mobile Safari/533.1");
-            // ³¬Ê±ÉèÖÃ
-            /* ´ÓÁ¬½Ó³ØÖĞÈ¡Á¬½ÓµÄ³¬Ê±Ê±¼ä */
+            // è¶…æ—¶è®¾ç½®
+            /* ä»è¿æ¥æ± ä¸­å–è¿æ¥çš„è¶…æ—¶æ—¶é—´ */
             ConnManagerParams.setTimeout(params, 1000);
-            /* Á¬½Ó³¬Ê± */
+            /* è¿æ¥è¶…æ—¶ */
             HttpConnectionParams.setConnectionTimeout(params, 2000);
-            /* ÇëÇó³¬Ê± */
+            /* è¯·æ±‚è¶…æ—¶ */
             HttpConnectionParams.setSoTimeout(params, 4000);
             
-            // ÉèÖÃÎÒÃÇµÄHttpClientÖ§³ÖHTTPºÍHTTPSÁ½ÖÖÄ£Ê½
+            // è®¾ç½®æˆ‘ä»¬çš„HttpClientæ”¯æŒHTTPå’ŒHTTPSä¸¤ç§æ¨¡å¼
             SchemeRegistry schReg = new SchemeRegistry();
             schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
             schReg.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 
-            // Ê¹ÓÃÏß³Ì°²È«µÄÁ¬½Ó¹ÜÀíÀ´´´½¨HttpClient
+            // ä½¿ç”¨çº¿ç¨‹å®‰å…¨çš„è¿æ¥ç®¡ç†æ¥åˆ›å»ºHttpClient
             ClientConnectionManager conMgr = new ThreadSafeClientConnManager(params, schReg);
             customerHttpClient = new DefaultHttpClient(conMgr, params);
         }
@@ -73,20 +73,20 @@ public class HttpClientUtil {
 
     public static String post(String url, NameValuePair... params) {
         try {
-            // ±àÂë²ÎÊı
-            List<NameValuePair> formparams = new ArrayList<NameValuePair>(); // ÇëÇó²ÎÊı
+            // ç¼–ç å‚æ•°
+            List<NameValuePair> formparams = new ArrayList<NameValuePair>(); // è¯·æ±‚å‚æ•°
             for (NameValuePair p : params) {
                 formparams.add(p);
             }
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, CHARSET);
-            // ´´½¨POSTÇëÇó
+            // åˆ›å»ºPOSTè¯·æ±‚
             HttpPost request = new HttpPost(url);
             request.setEntity(entity);
-            // ·¢ËÍÇëÇó
+            // å‘é€è¯·æ±‚
             HttpClient client = getHttpClient();
             HttpResponse response = client.execute(request);
             if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new RuntimeException("ÇëÇóÊ§°Ü");
+                throw new RuntimeException("è¯·æ±‚å¤±è´¥");
             }
             HttpEntity resEntity =  response.getEntity();
             return (resEntity ==null) ?null : EntityUtils.toString(resEntity, CHARSET);
@@ -97,7 +97,7 @@ public class HttpClientUtil {
             Log.w("CustomerHttpClient", e.getMessage());
             return null;
         } catch (IOException e) {
-            throw new RuntimeException("Á¬½ÓÊ§°Ü", e);
+            throw new RuntimeException("è¿æ¥å¤±è´¥", e);
         }
    }
     

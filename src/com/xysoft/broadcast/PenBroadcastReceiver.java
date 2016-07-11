@@ -85,19 +85,19 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 		switch ( penMsgType ) {
 			// Message of the attempt to connect a pen
 			case PenMsgType.PEN_CONNECTION_TRY:
-				Toast.makeText(context, "ÕıÔÚÁ¬½Ó...", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "æ­£åœ¨è¿æ¥...", Toast.LENGTH_SHORT).show();
 				break;
 			// Pens when the connection is completed (state certification process is not yet in progress)
 			case PenMsgType.PEN_CONNECTION_SUCCESS:
-				Toast.makeText(context, "Á¬½Ó³É¹¦", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "è¿æ¥æˆåŠŸ", Toast.LENGTH_SHORT).show();
 				break;
 			// Message when a connection attempt is unsuccessful pen
 			case PenMsgType.PEN_CONNECTION_FAILURE:
-				Toast.makeText(context, "Á¬½ÓÊ§°Ü", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "è¿æ¥å¤±è´¥", Toast.LENGTH_SHORT).show();
 				break;
 			// When you are connected and disconnected from the state pen
 			case PenMsgType.PEN_DISCONNECTED:
-				Toast.makeText(context, "Á¬½ÓÒÑ¶Ï¿ª", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "è¿æ¥å·²æ–­å¼€", Toast.LENGTH_SHORT).show();
 				break;
 			// Pen transmits the state when the firmware update is processed.
 			case PenMsgType.PEN_FW_UPGRADE_STATUS: {
@@ -115,17 +115,17 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 			// Pen firmware update is complete
 			case PenMsgType.PEN_FW_UPGRADE_SUCCESS:
 				this.onUpgradeSuccess();
-				Toast.makeText(context, "ÎÄ¼ş´«ÊäÍê³É", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "æ–‡ä»¶ä¼ è¾“å®Œæˆ", Toast.LENGTH_SHORT).show();
 				break;
 			// Pen Firmware Update Fails
 			case PenMsgType.PEN_FW_UPGRADE_FAILURE:
 				this.onUpgradeFailure( false );
-				Toast.makeText(context, "ÎÄ¼ş´«ÊäÊ§°Ü", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "æ–‡ä»¶ä¼ è¾“å¤±è´¥", Toast.LENGTH_SHORT).show();
 				break;
 			// When the pen stops randomly during the firmware update
 			case PenMsgType.PEN_FW_UPGRADE_SUSPEND:
 				this.onUpgradeFailure( true );
-				Toast.makeText(context, "ÔİÍ£ÎÄ¼ş´«Êä" ,Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "æš‚åœæ–‡ä»¶ä¼ è¾“" ,Toast.LENGTH_SHORT).show();
 				break;
 			// Offline Data List response of the pen
 			case PenMsgType.OFFLINE_DATA_NOTE_LIST:
@@ -145,8 +145,8 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 				// you can call this function, after complete download.
 				//
 				// iPenCtrl.reqOfflineData( sectionId, ownerId, noteId );
-				Toast.makeText(context, "µçÁ¿£º"+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_BATTERY_STATUS, -1)+
-						"£¬ÄÚ´æÒÑÊ¹ÓÃ£º"+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_MEMORY_STATUS, -1), Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "ç”µé‡ï¼š"+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_BATTERY_STATUS, -1)+
+						"ï¼Œå†…å­˜å·²ä½¿ç”¨ï¼š"+PreferenceUtils.getInt(context, PenCtrlConst.Setting.KEY_MEMORY_STATUS, -1), Toast.LENGTH_SHORT).show();
 				break;
 			// Messages for offline data transfer begins
 			case PenMsgType.OFFLINE_DATA_SEND_START:
@@ -210,16 +210,16 @@ public class PenBroadcastReceiver extends BroadcastReceiver{
 	}
 	
 	private void onUpgradeSuccess() {
-		mBuilder.setContentText( "ÎÄ¼ş´«ÊäÍê³É" ).setProgress( 0, 0, false );
+		mBuilder.setContentText( "æ–‡ä»¶ä¼ è¾“å®Œæˆ" ).setProgress( 0, 0, false );
 		mNotifyManager.notify( 0, mBuilder.build() );
 	}
 	
 	private void onUpgradeFailure( boolean isSuspend ) {
 		if ( isSuspend ) {
-			mBuilder.setContentText( "ÔİÍ£ÎÄ¼ş´«Êä" ).setProgress( 0, 0, false );
+			mBuilder.setContentText( "æš‚åœæ–‡ä»¶ä¼ è¾“" ).setProgress( 0, 0, false );
 		}
 		else {
-			mBuilder.setContentText( "ÎÄ¼ş´«ÊäÊ§°Ü" ).setProgress( 0, 0, false );
+			mBuilder.setContentText( "æ–‡ä»¶ä¼ è¾“å¤±è´¥" ).setProgress( 0, 0, false );
 		}
 		mNotifyManager.notify( 0, mBuilder.build() );
 	}

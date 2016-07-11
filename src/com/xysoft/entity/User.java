@@ -2,8 +2,8 @@ package com.xysoft.entity;
 
 public class User {
 	
-	private String name="Ğ¡Ç¿";
-	private String sex="ÄĞ";
+	private String name="å°æ˜";
+	private String sex="ç”·";
 	private int age=0;
 
 	public User() {
@@ -43,7 +43,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return getName() + "	" + getAge() + "Ëê";
+		return getName() + "	" + getAge() + "å²";
 	}
 	
 }

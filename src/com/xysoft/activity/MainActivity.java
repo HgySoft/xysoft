@@ -66,10 +66,10 @@ public class MainActivity extends BaseActivity {
 		switch (item.getItemId()) {
 		case R.id.menu_connectPen:
 			if(!BluetoothUtil.isSuportBluetooth()) {
-				showToast("¸ÃÉè±¸²»Ö§³ÖÀ¶ÑÀ£¡", Toast.LENGTH_SHORT);
+				showToast("è¯¥è®¾å¤‡ä¸æ”¯æŒè“ç‰™ï¼", Toast.LENGTH_SHORT);
 			}else {
 				if(!penClientCtrl.isConnected()) {
-					showToast("ÕıÔÚËÑË÷À¶ÑÀÉè±¸...", Toast.LENGTH_SHORT);
+					showToast("æ­£åœ¨æœç´¢è“ç‰™è®¾å¤‡...", Toast.LENGTH_SHORT);
 					intent = new Intent(this, BluetoothDeviceActivity.class);
 					startActivityForResult(intent, REQUEST_CONNECT_PEN);
 				}else {
@@ -82,28 +82,28 @@ public class MainActivity extends BaseActivity {
 			startActivityForResult(intent, Activity.RESULT_OK);
 			return true;
 		case R.id.menu_red: 
-			penClientCtrl.reqSetupPenTipColor(-444912);//ºì
+			penClientCtrl.reqSetupPenTipColor(-444912);//çº¢
 			return true;
 		case R.id.menu_blue: 
-			penClientCtrl.reqSetupPenTipColor(Color.BLUE);//À¶
+			penClientCtrl.reqSetupPenTipColor(Color.BLUE);//è“
 			return true;
 		case R.id.menu_yellow: 
-			penClientCtrl.reqSetupPenTipColor(-275674);//»Æ
+			penClientCtrl.reqSetupPenTipColor(-275674);//é»„
 			return true;
 		case R.id.menu_pink: 
-			penClientCtrl.reqSetupPenTipColor(-57212);//·Û
+			penClientCtrl.reqSetupPenTipColor(-57212);//ç²‰
 			return true;
 		case R.id.menu_mint: 
-			penClientCtrl.reqSetupPenTipColor(-14163768);//ÂÌ
+			penClientCtrl.reqSetupPenTipColor(-14163768);//ç»¿
 			return true;
 		case R.id.menu_violet: 
-			penClientCtrl.reqSetupPenTipColor(-6537267);//×Ï
+			penClientCtrl.reqSetupPenTipColor(-6537267);//ç´«
 			return true;
 		case R.id.menu_gray: 
-			penClientCtrl.reqSetupPenTipColor(-4342339);//»Ò
+			penClientCtrl.reqSetupPenTipColor(-4342339);//ç°
 			return true;
 		case R.id.menu_black: 
-			penClientCtrl.reqSetupPenTipColor(-16777216);//ºÚ
+			penClientCtrl.reqSetupPenTipColor(-16777216);//é»‘
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		if(lastClickTime<=0) {
-			showToast("ÔÙ°´Ò»´ÎÍË³ö³ÌĞò", Toast.LENGTH_SHORT);
+			showToast("å†æŒ‰ä¸€æ¬¡é€€å‡ºç¨‹åº", Toast.LENGTH_SHORT);
 			lastClickTime = System.currentTimeMillis();
 		}else {
 			long currentClickTime = System.currentTimeMillis();
@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity {
 				finish();
 			}else {
 				lastClickTime = currentClickTime;
-				showToast("ÔÙ°´Ò»´ÎÍË³ö³ÌĞò", Toast.LENGTH_SHORT);
+				showToast("å†æŒ‰ä¸€æ¬¡é€€å‡ºç¨‹åº", Toast.LENGTH_SHORT);
 			}
 		}
 	}
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 			case REQUEST_BLUETOOTH_TURNON:
-				showToast("À¶ÑÀÒÑ¿ªÆô", Toast.LENGTH_SHORT);
+				showToast("è“ç‰™å·²å¼€å¯", Toast.LENGTH_SHORT);
 				break;
 			case REQUEST_CONNECT_PEN:
 				if ( resultCode == Activity.RESULT_OK ) {
