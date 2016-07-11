@@ -14,7 +14,7 @@ public class BaseActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);//»´∆¡
+		getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);//ÂÖ®Â±è
 		super.onCreate(savedInstanceState);
 	}
 	
