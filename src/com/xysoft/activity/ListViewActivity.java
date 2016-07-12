@@ -1,13 +1,22 @@
 package com.xysoft.activity;
 
 import com.example.app.R;
+import com.xysoft.broadcast.ScoketClientBroadcastReceiver;
+import com.xysoft.broadcast.ScoketServerBroadcastReceiver;
+import com.xysoft.common.ScoketConst;
+import com.xysoft.common.ScoketConst.Clientcast;
+import com.xysoft.common.ScoketConst.Servercast;
 import com.xysoft.entity.User;
+import com.xysoft.service.ScoketClientService;
+import com.xysoft.service.ScoketServerService;
 import com.xysoft.suport.BaseActivity;
 import com.xysoft.suport.BaseListAdapter;
 import com.xysoft.util.BluetoothUtil;
 import com.xysoft.util.InjectView;
 import com.xysoft.util.Injector;
+
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +33,8 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 	private ListView lv;
 	private BaseListAdapter<User> adapter; 
 	public static final int REQUEST_BLUETOOTH_TURNON = 1;
+	private ScoketClientBroadcastReceiver scoketClientBroadcastReceiver;
+	private ScoketServerBroadcastReceiver scoketServerBroadcastReceiver;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,32 @@ public class ListViewActivity extends BaseActivity implements OnItemClickListene
 		adapter.add(new User("开启蓝牙", "女", 3));
 		adapter.add(new User("关闭蓝牙", "女", 4));
 		lv.setOnItemClickListener(this);
+		scoketClientBroadcastReceiver = new ScoketClientBroadcastReceiver();
+		scoketServerBroadcastReceiver = new ScoketServerBroadcastReceiver();
 		cancelNotification(R.layout.activity_main);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		IntentFilter clientfilter = new IntentFilter();
+		clientfilter.addAction(Clientcast.CONNECT_START);
+		registerReceiver(scoketClientBroadcastReceiver, clientfilter);
+		Intent clientintent = new Intent(this, ScoketClientService.class);
+		clientintent.putExtra(ScoketConst.IP_NAME, "10.0.2.2:9090");
+		startService(clientintent);
+		
+		IntentFilter serverfilter = new IntentFilter();
+		serverfilter.addAction(Servercast.CONNECT_START);
+		registerReceiver(scoketServerBroadcastReceiver, serverfilter);
+		Intent serverintent = new Intent(this, ScoketServerService.class);
+		startService(serverintent);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(scoketClientBroadcastReceiver);
 	}
 	
 	@Override

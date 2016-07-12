@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     
     <uses-sdk
         android:minSdkVersion="11"
@@ -40,6 +41,8 @@
             android:name="com.xysoft.activity.ListViewActivity"
             android:label="@string/hello_world">
         </activity>
+        <service android:name="com.xysoft.service.ScoketClientService"></service>
+        <service android:name="com.xysoft.service.ScoketServerService"></service>
     </application>
 
 </manifest>
